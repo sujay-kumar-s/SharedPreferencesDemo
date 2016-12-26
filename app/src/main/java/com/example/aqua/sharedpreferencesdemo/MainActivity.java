@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     Button loginbtn;
     String stemail="jspiders@gmail.com";
     String stpwd="123";
+    SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,9 +30,10 @@ public class MainActivity extends AppCompatActivity {
         loginbtn= (Button) findViewById(R.id.loginBT);
 
         //retriev data from sharedpreference
-        SharedPreferences sp=getSharedPreferences("mypref",MODE_PRIVATE);
+        sp=getSharedPreferences("mypref",MODE_PRIVATE);
         String s1=sp.getString("uname",null);
        String s2= sp.getString("pwd",null);
+        Log.d("shared",s1+"=============>"+s2);
         uname.setText(s1);
         pwd.setText(s2);
 
@@ -45,10 +47,11 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("success","login success");
                         if(rmpwd.isChecked()==true)
                         {
-                            SharedPreferences sp=getSharedPreferences("mypref",MODE_PRIVATE);
-                            sp.edit().putString("uname",input_email);
-                            sp.edit().putString("pwd",input_pwd);
-                            sp.edit().commit();
+                           //sp=getSharedPreferences("mypref",MODE_PRIVATE);
+                            SharedPreferences.Editor editor=sp.edit();
+                            editor.putString("uname",input_email);
+                            editor.putString("pwd",input_pwd);
+                            editor.commit();
                             Intent home_intent=new Intent(MainActivity.this,HomeActivity.class);
                             startActivity(home_intent);
                         }
